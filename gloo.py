@@ -6,7 +6,7 @@ from torch.multiprocessing import Process
 
 
 def allreduce(send, recv):
-    """ Implementation of a ring-reduce. """
+    """Implementation of a ring-reduce."""
     rank = dist.get_rank()
     size = dist.get_world_size()
     send_buff = th.zeros(send.size())
@@ -35,8 +35,8 @@ def allreduce(send, recv):
 
 
 def run(rank, size):
-    """ Distributed function to be implemented later. """
-#    t = th.ones(2, 2)
+    """Distributed function to be implemented later."""
+    #    t = th.ones(2, 2)
     t = th.rand(2, 2).cuda()
     # for _ in range(10000000):
     for _ in range(4):
@@ -47,10 +47,10 @@ def run(rank, size):
     print(t)
 
 
-def init_processes(rank, size, fn, backend='gloo'):
-    """ Initialize the distributed environment. """
-    os.environ['MASTER_ADDR'] = '127.0.0.1'
-    os.environ['MASTER_PORT'] = '29500'
+def init_processes(rank, size, fn, backend="gloo"):
+    """Initialize the distributed environment."""
+    os.environ["MASTER_ADDR"] = "127.0.0.1"
+    os.environ["MASTER_PORT"] = "29500"
     dist.init_process_group(backend, rank=rank, world_size=size)
     fn(rank, size)
 
@@ -65,4 +65,3 @@ if __name__ == "__main__":
 
     for p in processes:
         p.join()
-
